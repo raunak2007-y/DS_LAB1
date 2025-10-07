@@ -1,0 +1,87 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int val) {
+        data = val;
+        next = nullptr;
+    }
+};
+
+class SinglyLinkedList {
+    Node* head;
+
+public:
+    SinglyLinkedList() {
+        head = nullptr;
+    }
+
+    // Function to insert node at end
+    void insertAtEnd(int val) {
+        Node* newNode = new Node(val);
+        if (head == nullptr) {
+            head = newNode;
+            return;
+        }
+        Node* temp = head;
+        while (temp->next != nullptr)
+            temp = temp->next;
+        temp->next = newNode;
+    }
+
+    // Function to display the list
+    void display() {
+        Node* temp = head;
+        while (temp != nullptr) {
+            cout << temp->data;
+            if (temp->next != nullptr)
+                cout << "->";
+            temp = temp->next;
+        }
+        cout << "->NULL" << endl;
+    }
+
+    // Function to reverse the linked list
+    void reverse() {
+        Node* prev = nullptr;
+        Node* current = head;
+        Node* next = nullptr;
+
+        while (current != nullptr) {
+            next = current->next;   // store next node
+            current->next = prev;   // reverse current node's pointer
+            prev = current;         // move prev to current
+            current = next;         // move to next node
+        }
+        head = prev;                // update head to new first node
+    }
+};
+
+// ---------------- MAIN FUNCTION ----------------
+int main() {
+    SinglyLinkedList sll;
+    int n, val;
+
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    cout << "Enter elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> val;
+        sll.insertAtEnd(val);
+    }
+
+    cout << "Original Linked List: ";
+    sll.display();
+
+    sll.reverse();
+
+    cout << "Reversed Linked List: ";
+    sll.display();
+
+    return 0;
+}
